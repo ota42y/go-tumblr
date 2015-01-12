@@ -1,0 +1,13 @@
+go-tumblr is a simple, transparent Go package for accessing version 2 of the Tumblr API.
+
+This package is under development.
+
+# Feature
+- [] get auth token
+- [] authentication
+- [] get posts
+- [] reblog post
+
+# Future work
+- get user data
+- send post
