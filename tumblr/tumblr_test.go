@@ -1,4 +1,4 @@
-package Tumblr
+package tumblr
 
 import (
   "testing"
