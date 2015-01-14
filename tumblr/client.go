@@ -1,29 +1,17 @@
 package tumblr
 
-import (
-	"net/http"
-	"net/url"
-)
-
-type Server struct {
-	PostPath string
+type Client struct {
+	consumerKey string
+	consumerSecret string
+	accessToken string
+	accessTokenSecret string
 }
 
-func NewServer(postPath string) *Server {
-	return &Server{
-		PostPath: postPath,
+func NewClient(consumerKey string, consumerSecret string, accessToken string, accessTokenSecret string) *Client {
+	return &Client{
+		consumerKey: consumerKey,
+		consumerSecret: consumerSecret,
+		accessToken: accessToken,
+		accessTokenSecret: accessTokenSecret,
 	}
-}
-
-func (server *Server) SendData(post_data *url.Values) (success bool) {
-	resp, _ := http.PostForm(
-		server.PostPath,
-		*post_data,
-	)
-
-	if resp == nil {
-		return false
-	}
-
-	return resp.StatusCode == 200
 }
