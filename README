@@ -2,6 +2,8 @@ go-tumblr is a simple, transparent Go package for accessing version 2 of the Tum
 
 This package is under development.
 
+# install
+
 # Feature
 - [] get auth token
 - [] authentication
