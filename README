@@ -4,6 +4,20 @@ This package is under development.
 
 # install
 
+# Hou to use
+
+# Get Access Token
+This package not provide.
+So you need access token.
+
+I recommend use oauth package
+go get github.com/mrjones/oauth
+
+see example/getAccessToken.go
+
+
+
+
 # Feature
 - [] get auth token
 - [] authentication
