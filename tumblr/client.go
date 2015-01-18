@@ -1,17 +1,17 @@
 package tumblr
 
 type Client struct {
-	consumerKey string
-	consumerSecret string
-	accessToken string
-	accessTokenSecret string
+	ConsumerKey string
+	ConsumerSecret string
+	AccessToken string
+	AccessTokenSecret string
 }
 
 func NewClient(consumerKey string, consumerSecret string, accessToken string, accessTokenSecret string) *Client {
 	return &Client{
-		consumerKey: consumerKey,
-		consumerSecret: consumerSecret,
-		accessToken: accessToken,
-		accessTokenSecret: accessTokenSecret,
+		ConsumerKey: consumerKey,
+		ConsumerSecret: consumerSecret,
+		AccessToken: accessToken,
+		AccessTokenSecret: accessTokenSecret,
 	}
 }
