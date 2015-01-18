@@ -18,13 +18,12 @@ func NewBlog(host string, client *Client) (*Blog){
 	}
 }
 
-func (blog *Blog) Info() (res *http.Response){
+func (blog *Blog) Info() (res *http.Response, err error){
 	values := url.Values{}
 	values.Add("api_key", blog.client.ConsumerKey)
 
 	uri := "http://api.tumblr.com/v2/blog/" + blog.Host + "/info?" + values.Encode()
 
-	resp, _ := http.Get(uri)
-
-	return resp
+	res, err = http.Get(uri)
+	return
 }
