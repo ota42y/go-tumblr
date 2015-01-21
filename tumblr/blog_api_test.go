@@ -4,8 +4,8 @@ import (
 	"testing"
 )
 
-func TestNew(t *testing.T) {
-	client := NewClient("", "", "", "")
+func TestNewBlogApi(t *testing.T) {
+	client := CreateTestTumblr().Client
 	actual := NewBlogApi("scipsy.tumblr.com", client)
 	if actual == nil {
 		t.Errorf("got %v\nwant %v", actual, nil)
@@ -13,7 +13,7 @@ func TestNew(t *testing.T) {
 }
 
 func TestInfo(t *testing.T) {
-	client := NewClient("", "", "", "")
+	client := CreateTestTumblr().Client
 	blogApi := NewBlogApi("scipsy.tumblr.com", client)
 	meta, blog, err := blogApi.Info()
 
