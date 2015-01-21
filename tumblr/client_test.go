@@ -4,13 +4,9 @@ import (
 	"testing"
 )
 
-func TestNew(t *testing.T) {
-	consumerKey := ""
-	consumerSecret := ""
-	accessToken := ""
-	accessTokenSecret := ""
+func TestNewClient(t *testing.T) {
+	client := CreateTestTumblr().Client
 
-	client := NewClient(consumerKey, consumerSecret, accessToken, accessTokenSecret)
 	if client == nil {
 		t.Errorf("got %v\nwant %v", client, nil)
 	}

@@ -5,7 +5,7 @@ import (
 )
 
 func TestNew(t *testing.T) {
-  actual := New()
+  actual := CreateTestTumblr()
   if actual == nil {
     t.Errorf("got %v\nwant %v", actual, nil)
   }
