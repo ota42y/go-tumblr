@@ -1,13 +1,13 @@
 package tumblr
 
-type Root struct{
-	Meta Meta
+type Root struct {
+	Meta     Meta
 	Response Response
 }
 
-type Meta struct{
+type Meta struct {
 	Status int
-	Msg string
+	Msg    string
 }
 
 type Response struct {
@@ -15,13 +15,13 @@ type Response struct {
 }
 
 type Blog struct {
-	Title string
-	Posts int
-	Name string
-	Url string
-	Updated string // TODO: convert time object
+	Title       string
+	Posts       int
+	Name        string
+	Url         string
+	Updated     string // TODO: convert time object
 	Description string
-	Ask bool
-	Ask_anon bool
-	Likes int
+	Ask         bool
+	Ask_anon    bool
+	Likes       int
 }
