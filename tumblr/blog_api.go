@@ -1,25 +1,24 @@
 package tumblr
 
-
 import (
+	"encoding/json"
 	"net/http"
 	"net/url"
-	"encoding/json"
 )
 
-type BlogApi struct{
-	Host string
+type BlogApi struct {
+	Host   string
 	client *Client
 }
 
-func NewBlogApi(host string, client *Client) (*BlogApi){
+func NewBlogApi(host string, client *Client) *BlogApi {
 	return &BlogApi{
-		Host: host,
+		Host:   host,
 		client: client,
 	}
 }
 
-func (blog *BlogApi) Info() (m *Meta, b *Blog, err error){
+func (blog *BlogApi) Info() (m *Meta, b *Blog, err error) {
 	values := url.Values{}
 	values.Add("api_key", blog.client.ConsumerKey)
 
