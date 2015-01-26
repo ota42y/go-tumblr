@@ -38,3 +38,17 @@ func TestInfo(t *testing.T) {
 		t.Errorf("%v is not valid response", blog.Title)
 	}
 }
+
+func TestPosts(t *testing.T) {
+	client := CreateTestTumblr().Client
+	blogApi := NewBlogApi("scipsy.tumblr.com", client)
+	res, err := blogApi.Posts()
+
+	if err != nil {
+		t.Errorf("response error%v\n", err)
+	}
+
+	if res == "" {
+		t.Errorf("response %v\n", res)
+	}
+}
