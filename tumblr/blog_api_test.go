@@ -42,13 +42,20 @@ func TestInfo(t *testing.T) {
 func TestPosts(t *testing.T) {
 	client := CreateTestTumblr().Client
 	blogApi := NewBlogApi("scipsy.tumblr.com", client)
-	res, err := blogApi.Posts()
+	meta, response, err := blogApi.Posts()
 
 	if err != nil {
 		t.Errorf("response error%v\n", err)
 	}
 
-	if res == "" {
-		t.Errorf("response %v\n", res)
+	if meta == nil {
+		t.Errorf("meat is nil")
 	}
+
+	if response == nil {
+		t.Errorf("response is nil")
+	}
+
+	t.Errorf("%v", response)
+
 }

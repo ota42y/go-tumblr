@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
-	"io/ioutil"
+	"fmt"
 )
 
 type BlogApi struct {
@@ -34,7 +34,7 @@ func (blog *BlogApi) Info() (m *Meta, b *Blog, err error) {
 	return &r.Meta, &r.Response.Blog, err
 }
 
-func (blog *BlogApi) Posts() (str string, err error) {
+func (blog *BlogApi) Posts() (m *Meta, p *Response, err error) {
 	// https://www.tumblr.com/docs/en/api/v2#posts
 	// api.tumblr.com/v2/blog/{base-hostname}/posts[/type]?api_key={key}&[optional-params=]
 
@@ -45,10 +45,20 @@ func (blog *BlogApi) Posts() (str string, err error) {
 
 	res, err := http.Get(uri)
 	if err != nil{
-		return "", err
+		return nil, nil, err
 	}
-	b, err := ioutil.ReadAll(res.Body)
 
-	str = string(b)
-	return str, err
+	var r Root
+	dec := json.NewDecoder(res.Body)
+	dec.Decode(&r)
+
+	//var z PostBase
+	//c := z.(Post)
+
+	for _, p := range r.Response.Posts{
+		//a := p.(Post)
+		fmt.Println("%v", p.Id)
+	}
+
+	return &r.Meta, &r.Response, err
 }
