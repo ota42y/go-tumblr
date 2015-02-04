@@ -4,9 +4,13 @@ import (
 	"testing"
 )
 
+func CreateTestApi(c *Client) *BlogApi {
+	return NewBlogApi("ota42y.tumblr.com", c)
+}
+
 func TestNewBlogApi(t *testing.T) {
 	client := CreateTestTumblr().Client
-	actual := NewBlogApi("scipsy.tumblr.com", client)
+	actual := CreateTestApi(client)
 	if actual == nil {
 		t.Errorf("got %v\nwant %v", actual, nil)
 	}
@@ -14,7 +18,7 @@ func TestNewBlogApi(t *testing.T) {
 
 func TestInfo(t *testing.T) {
 	client := CreateTestTumblr().Client
-	blogApi := NewBlogApi("scipsy.tumblr.com", client)
+	blogApi := CreateTestApi(client)
 	meta, blog, err := blogApi.Info()
 
 	if err != nil {
@@ -41,8 +45,8 @@ func TestInfo(t *testing.T) {
 
 func TestPosts(t *testing.T) {
 	client := CreateTestTumblr().Client
-	blogApi := NewBlogApi("scipsy.tumblr.com", client)
-	meta, response, err := blogApi.Posts()
+	blogApi := CreateTestApi(client)
+	meta, posts, err := blogApi.Posts()
 
 	if err != nil {
 		t.Errorf("response error%v\n", err)
@@ -52,10 +56,11 @@ func TestPosts(t *testing.T) {
 		t.Errorf("meat is nil")
 	}
 
-	if response == nil {
+	if posts == nil {
 		t.Errorf("response is nil")
 	}
 
-	t.Errorf("%v", response)
-
+	if len(*posts) == 0 {
+		t.Errorf("no posts")
+	}
 }

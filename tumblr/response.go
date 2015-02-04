@@ -11,8 +11,8 @@ type Meta struct {
 }
 
 type Response struct {
-	Blog Blog
-	Posts []PostImpl
+	Blog  Blog
+	Posts []Post
 }
 
 type Blog struct {
@@ -27,44 +27,21 @@ type Blog struct {
 	Likes       int
 }
 
-type Post interface {
-	Post() string
-	Id() int64
-	PostUrl() string
-	Type() string
-	Timestamp() int64
-	Date() string
-	Format() string
-	ReblogKey() string
-	Tags() []string
-	Bookmarklet() bool
-	Mobile() bool
-	SourceUrl() string
-	SourceTitle() string
-	Liked() bool
-	State() string
-	TotalPosts() int64
-}
-
-type PostImpl struct {
-	BlogName string
-	Id int64
-	PostUrl string
-	Type string
-	Timestamp int64
-	Date string
-	Format string
-	ReblogKey string
-	Tags []string
+type Post struct {
+	BlogName    string
+	Id          int64
+	PostUrl     string
+	Type        string
+	Timestamp   int64
+	Date        string
+	Format      string
+	ReblogKey   string
+	Tags        []string
 	Bookmarklet bool
-	Mobile bool
-	SourceUrl string
+	Mobile      bool
+	SourceUrl   string
 	SourceTitle string
-	Liked bool
-	State string
-	TotalPosts int64
-}
-
-type PostBase struct {
-	PostImpl
+	Liked       bool
+	State       string
+	TotalPosts  int64
 }
