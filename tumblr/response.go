@@ -44,4 +44,26 @@ type Post struct {
 	Liked       bool
 	State       string
 	TotalPosts  int64
+
+
+	Caption string
+	ImagePermalink string `json:"image_permalink"`
+
+	// Post
+	Title string
+	Body string
+
+	// Photo
+	Photos []Photo `json:"photos"`
+}
+
+type Photo struct {
+	Caption string `json:"caption"`
+	AltSizes []AltSize `json:"alt_sizes"`
+}
+
+type AltSize struct {
+	Width int
+	Height int
+	Url string
 }
