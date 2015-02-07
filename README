@@ -19,9 +19,9 @@ see example/getAccessToken.go
 
 
 # Feature
-- [] get auth token
-- [] authentication
-- [] get posts
+- [x] get auth token
+- [x] authentication
+- [x] get posts
 - [] reblog post
 
 # Future work
