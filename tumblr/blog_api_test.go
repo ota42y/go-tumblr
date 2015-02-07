@@ -68,7 +68,7 @@ func TestPosts(t *testing.T) {
 func TestPhotos(t *testing.T) {
 	client := CreateTestTumblr().Client
 	blogApi := CreateTestApi(client)
-	meta, posts, err := blogApi.Photos()
+	meta, posts, err := blogApi.Photo()
 
 	if err != nil {
 		t.Errorf("response error%v\n", err)
@@ -92,5 +92,37 @@ func TestPhotos(t *testing.T) {
 
 	if len((*posts)[0].Photos[0].AltSizes) == 0 {
 		t.Errorf("alt sizes isn't exist")
+	}
+}
+
+func TestQuote(t *testing.T) {
+	client := CreateTestTumblr().Client
+	blogApi := CreateTestApi(client)
+	meta, posts, err := blogApi.Quote()
+
+	if err != nil {
+		t.Errorf("response error%v\n", err)
+	}
+
+	if meta == nil {
+		t.Errorf("meat is nil")
+	}
+
+	if posts == nil {
+		t.Errorf("response is nil")
+	}
+
+	if len(*posts) == 0 {
+		t.Errorf("no posts %v", meta)
+	}
+
+	post := (*posts)[0]
+
+	if post.Text == "" {
+		t.Errorf("text isn't exist")
+	}
+
+	if post.Source == "" {
+		t.Errorf("source isn't exist")
 	}
 }

@@ -2,9 +2,9 @@ package tumblr
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"net/http"
 	"net/url"
-	"io/ioutil"
 )
 
 type BlogApi struct {
@@ -59,6 +59,10 @@ func (blog *BlogApi) Posts(postType string) (*Meta, *[]Post, error) {
 	return &root.Meta, &root.Response.Posts, err
 }
 
-func (blog *BlogApi) Photos() (*Meta, *[]Post, error) {
+func (blog *BlogApi) Photo() (*Meta, *[]Post, error) {
 	return blog.Posts("photo")
+}
+
+func (blog *BlogApi) Quote() (*Meta, *[]Post, error) {
+	return blog.Posts("quote")
 }
