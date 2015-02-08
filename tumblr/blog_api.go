@@ -19,19 +19,30 @@ func NewBlogApi(host string, client *Client) *BlogApi {
 	}
 }
 
+func (blog *BlogApi) send(method string, values *url.Values) ([]byte, error) {
+	uri := "http://api.tumblr.com/v2/blog/" + blog.Host + method
+	uri += "?" + values.Encode()
+
+	res, err := http.Get(uri)
+	if err != nil {
+		return make([]byte, 0), err
+	}
+
+	data, err := ioutil.ReadAll(res.Body)
+	return data, err
+}
+
 func (blog *BlogApi) Info() (m *Meta, b *Blog, err error) {
 	values := url.Values{}
 	values.Add("api_key", blog.client.ConsumerKey)
 
-	uri := "http://api.tumblr.com/v2/blog/" + blog.Host + "/info?" + values.Encode()
+	method := "/info"
+	data, err := blog.send(method, &values)
 
-	res, err := http.Get(uri)
+	var root Root
+	json.Unmarshal(data, &root)
 
-	var r Root
-	dec := json.NewDecoder(res.Body)
-	dec.Decode(&r)
-
-	return &r.Meta, &r.Response.Blog, err
+	return &root.Meta, &root.Response.Blog, err
 }
 
 func (blog *BlogApi) Posts(postType string) (*Meta, *[]Post, error) {
@@ -41,18 +52,12 @@ func (blog *BlogApi) Posts(postType string) (*Meta, *[]Post, error) {
 	values := url.Values{}
 	values.Add("api_key", blog.client.ConsumerKey)
 
-	uri := "http://api.tumblr.com/v2/blog/" + blog.Host + "/posts"
+	method := "/posts"
 	if postType != "" {
-		uri += "/" + postType
-	}
-	uri += "?" + values.Encode()
-
-	res, err := http.Get(uri)
-	if err != nil {
-		return nil, nil, err
+		method += "/" + postType
 	}
 
-	data, err := ioutil.ReadAll(res.Body)
+	data, err := blog.send(method, &values)
 	var root Root
 	json.Unmarshal(data, &root)
 
