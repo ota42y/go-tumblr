@@ -45,25 +45,28 @@ type Post struct {
 	State       string
 	TotalPosts  int64
 
-
-	Caption string
+	Caption        string
 	ImagePermalink string `json:"image_permalink"`
 
 	// Post
 	Title string
-	Body string
+	Body  string
 
 	// Photo
 	Photos []Photo `json:"photos"`
+
+	// Quote
+	Text   string
+	Source string
 }
 
 type Photo struct {
-	Caption string `json:"caption"`
+	Caption  string    `json:"caption"`
 	AltSizes []AltSize `json:"alt_sizes"`
 }
 
 type AltSize struct {
-	Width int
+	Width  int
 	Height int
-	Url string
+	Url    string
 }
