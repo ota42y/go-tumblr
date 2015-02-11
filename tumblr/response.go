@@ -30,12 +30,12 @@ type Blog struct {
 type Post struct {
 	BlogName    string
 	Id          int64
-	PostUrl     string
+	PostUrl     string `json:"post_url"`
 	Type        string
 	Timestamp   int64
 	Date        string
 	Format      string
-	ReblogKey   string
+	ReblogKey   string `json:"reblog_key"`
 	Tags        []string
 	Bookmarklet bool
 	Mobile      bool
