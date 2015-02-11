@@ -117,7 +117,6 @@ func TestQuote(t *testing.T) {
 	}
 
 	post := (*posts)[0]
-
 	if post.Text == "" {
 		t.Errorf("text isn't exist")
 	}
