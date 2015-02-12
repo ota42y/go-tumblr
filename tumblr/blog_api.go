@@ -3,6 +3,7 @@ package tumblr
 import (
 	"encoding/json"
 	"io/ioutil"
+	"strconv"
 )
 
 type BlogApi struct {
@@ -21,6 +22,18 @@ func (blog *BlogApi) get(method string, params *map[string]string) ([]byte, erro
 	uri := "http://api.tumblr.com/v2/blog/" + blog.Host + method
 
 	res, err := blog.client.Get(uri, *params)
+	if err != nil {
+		return make([]byte, 0), err
+	}
+
+	data, err := ioutil.ReadAll(res.Body)
+	return data, err
+}
+
+func (blog *BlogApi) post(method string, params *map[string]string) ([]byte, error) {
+	uri := "http://api.tumblr.com/v2/blog/" + blog.Host + method
+
+	res, err := blog.client.Post(uri, *params)
 	if err != nil {
 		return make([]byte, 0), err
 	}
@@ -67,4 +80,22 @@ func (blog *BlogApi) Photo() (*Meta, *[]Post, error) {
 
 func (blog *BlogApi) Quote() (*Meta, *[]Post, error) {
 	return blog.Posts("quote")
+}
+
+func (blog *BlogApi) Reblog(id int64, reblog_key string, comment string) (*Meta, int64, error) {
+	params := make(map[string]string)
+	params["id"] = strconv.FormatInt(id, 10)
+	params["reblog_key"] = reblog_key
+
+	if comment != "" {
+		params["comment"] = comment
+	}
+
+	method := "/post/reblog"
+
+	data, err := blog.post(method, &params)
+	var response ReblogResponse
+	json.Unmarshal(data, &response)
+
+	return &response.Meta, response.Response.Id, err
 }

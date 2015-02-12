@@ -114,6 +114,7 @@ func TestQuote(t *testing.T) {
 
 	if len(*posts) == 0 {
 		t.Errorf("no posts %v", meta)
+		return
 	}
 
 	post := (*posts)[0]
@@ -123,5 +124,30 @@ func TestQuote(t *testing.T) {
 
 	if post.Source == "" {
 		t.Errorf("source isn't exist")
+	}
+}
+
+func TestReblog(t *testing.T) {
+	/*
+		set reblog post id
+	*/
+
+	id := int64(0)
+	reblog_key := ""
+
+	client := CreateTestTumblr().Client
+	blogApi := CreateTestApi(client)
+	meta, id, err := blogApi.Reblog(id, reblog_key, "test")
+
+	if err != nil {
+		t.Errorf("response error%v\n", err)
+	}
+
+	if meta == nil {
+		t.Errorf("response is nil")
+	}
+
+	if id == 0 {
+		t.Errorf("id is 0")
 	}
 }

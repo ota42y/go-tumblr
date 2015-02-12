@@ -6,9 +6,9 @@ import (
 )
 
 const (
-	RequestTokenUrl = "http://www.tumblr.com/oauth/request_token"
-	AuthorizeTokenUrl   = "http://www.tumblr.com/oauth/authorize"
-	AccessTokenUrl = "http://www.tumblr.com/oauth/access_token"
+	RequestTokenUrl   = "http://www.tumblr.com/oauth/request_token"
+	AuthorizeTokenUrl = "http://www.tumblr.com/oauth/authorize"
+	AccessTokenUrl    = "http://www.tumblr.com/oauth/access_token"
 )
 
 type Client struct {
@@ -18,20 +18,20 @@ type Client struct {
 	AccessTokenSecret string
 
 	oauthClient *oauth.Consumer
-	token *oauth.AccessToken
+	token       *oauth.AccessToken
 }
 
 func NewClient(consumerKey string, consumerSecret string, accessToken string, accessTokenSecret string) *Client {
 	s := oauth.ServiceProvider{
-		RequestTokenUrl: RequestTokenUrl,
+		RequestTokenUrl:   RequestTokenUrl,
 		AuthorizeTokenUrl: AuthorizeTokenUrl,
-		AccessTokenUrl: AccessTokenUrl,
+		AccessTokenUrl:    AccessTokenUrl,
 	}
 
 	consumer := oauth.NewConsumer(consumerKey, consumerSecret, s)
 
 	token := &oauth.AccessToken{
-		Token: accessToken,
+		Token:  accessToken,
 		Secret: accessTokenSecret,
 	}
 
@@ -40,11 +40,15 @@ func NewClient(consumerKey string, consumerSecret string, accessToken string, ac
 		ConsumerSecret:    consumerSecret,
 		AccessToken:       accessToken,
 		AccessTokenSecret: accessTokenSecret,
-		oauthClient: consumer,
-		token: token,
+		oauthClient:       consumer,
+		token:             token,
 	}
 }
 
 func (c *Client) Get(url string, userParams map[string]string) (resp *http.Response, err error) {
 	return c.oauthClient.Get(url, userParams, c.token)
+}
+
+func (c *Client) Post(url string, userParams map[string]string) (resp *http.Response, err error) {
+	return c.oauthClient.Post(url, userParams, c.token)
 }
