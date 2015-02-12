@@ -70,3 +70,10 @@ type AltSize struct {
 	Height int
 	Url    string
 }
+
+type ReblogResponse struct {
+	Meta     Meta
+	Response struct {
+		Id int64
+	}
+}
