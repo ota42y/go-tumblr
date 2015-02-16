@@ -12,11 +12,7 @@ const (
 )
 
 type Client struct {
-	ConsumerKey       string
-	ConsumerSecret    string
-	AccessToken       string
-	AccessTokenSecret string
-
+	consumerKey string
 	oauthClient *oauth.Consumer
 	token       *oauth.AccessToken
 }
@@ -36,10 +32,7 @@ func NewClient(consumerKey string, consumerSecret string, accessToken string, ac
 	}
 
 	return &Client{
-		ConsumerKey:       consumerKey,
-		ConsumerSecret:    consumerSecret,
-		AccessToken:       accessToken,
-		AccessTokenSecret: accessTokenSecret,
+		consumerKey: consumerKey,
 		oauthClient:       consumer,
 		token:             token,
 	}
@@ -51,4 +44,8 @@ func (c *Client) Get(url string, userParams map[string]string) (resp *http.Respo
 
 func (c *Client) Post(url string, userParams map[string]string) (resp *http.Response, err error) {
 	return c.oauthClient.Post(url, userParams, c.token)
+}
+
+func (c *Client) GetConsumerKey() string {
+	return c.consumerKey
 }
