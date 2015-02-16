@@ -128,12 +128,7 @@ func TestQuote(t *testing.T) {
 }
 
 func TestReblog(t *testing.T) {
-	/*
-		set reblog post id
-	*/
-
-	id := int64(0)
-	reblog_key := ""
+	id, reblog_key := CreateTestReblogData()
 
 	client := CreateTestTumblr().Client
 	blogApi := CreateTestApi(client)
