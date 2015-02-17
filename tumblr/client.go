@@ -33,8 +33,8 @@ func NewClient(consumerKey string, consumerSecret string, accessToken string, ac
 
 	return &Client{
 		consumerKey: consumerKey,
-		oauthClient:       consumer,
-		token:             token,
+		oauthClient: consumer,
+		token:       token,
 	}
 }
 

@@ -9,3 +9,7 @@ func New(consumerKey string, consumerSecret string, accessToken string, accessTo
 
 	return &Tumblr{Client: client}
 }
+
+func (t *Tumblr) NewBlogApi(host string) *BlogApi {
+	return NewBlogApi(host, t.Client)
+}

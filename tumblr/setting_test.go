@@ -29,9 +29,9 @@ func CreateTestTumblr() *Tumblr {
 	return New(consumerKey, consumerSecret, accessToken, accessTokenSecret)
 }
 
-func CreateTestReblogData() (int64, string){
+func CreateTestReblogData() (int64, string) {
 	/*
-	set reblog post id
+		set reblog post id
 	*/
 
 	post_id := 0

@@ -44,7 +44,7 @@ func (blog *BlogApi) post(method string, params *map[string]string) ([]byte, err
 
 func (blog *BlogApi) Info() (m *Meta, b *Blog, err error) {
 	params := make(map[string]string)
-	params["api_key"] = blog.client.ConsumerKey
+	params["api_key"] = blog.client.GetConsumerKey()
 
 	method := "/info"
 	data, err := blog.get(method, &params)
@@ -60,7 +60,7 @@ func (blog *BlogApi) Posts(postType string) (*Meta, *[]Post, error) {
 	// api.tumblr.com/v2/blog/{base-hostname}/posts[/type]?api_key={key}&[optional-params=]
 
 	params := make(map[string]string)
-	params["api_key"] = blog.client.ConsumerKey
+	params["api_key"] = blog.client.GetConsumerKey()
 
 	method := "/posts"
 	if postType != "" {
