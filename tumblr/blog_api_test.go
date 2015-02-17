@@ -4,10 +4,6 @@ import (
 	"testing"
 )
 
-func CreateTestApi(c *Client) *BlogApi {
-	return NewBlogApi("ota42y.tumblr.com", c)
-}
-
 func TestNewBlogApi(t *testing.T) {
 	client := CreateTestTumblr().Client
 	actual := CreateTestApi(client)
