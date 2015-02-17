@@ -16,13 +16,14 @@ go get github.com/mrjones/oauth
 see example/getAccessToken.go
 
 
-
+# example
+see [example/example.go](example/example.go)
 
 # Feature
 - [x] get auth token
 - [x] authentication
 - [x] get posts
-- [] reblog post
+- [x] reblog post
 
 # Future work
 - get user data
