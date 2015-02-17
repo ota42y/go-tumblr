@@ -14,10 +14,9 @@ const (
 type Client struct {
 	consumerKey string
 	oauthClient *oauth.Consumer
-	token       *oauth.AccessToken
 }
 
-func NewClient(consumerKey string, consumerSecret string, accessToken string, accessTokenSecret string) *Client {
+func NewClient(consumerKey string, consumerSecret string) *Client {
 	s := oauth.ServiceProvider{
 		RequestTokenUrl:   RequestTokenUrl,
 		AuthorizeTokenUrl: AuthorizeTokenUrl,
@@ -26,24 +25,18 @@ func NewClient(consumerKey string, consumerSecret string, accessToken string, ac
 
 	consumer := oauth.NewConsumer(consumerKey, consumerSecret, s)
 
-	token := &oauth.AccessToken{
-		Token:  accessToken,
-		Secret: accessTokenSecret,
-	}
-
 	return &Client{
 		consumerKey: consumerKey,
 		oauthClient: consumer,
-		token:       token,
 	}
 }
 
-func (c *Client) Get(url string, userParams map[string]string) (resp *http.Response, err error) {
-	return c.oauthClient.Get(url, userParams, c.token)
+func (c *Client) Get(url string, userParams map[string]string, token *oauth.AccessToken) (resp *http.Response, err error) {
+	return c.oauthClient.Get(url, userParams, token)
 }
 
-func (c *Client) Post(url string, userParams map[string]string) (resp *http.Response, err error) {
-	return c.oauthClient.Post(url, userParams, c.token)
+func (c *Client) Post(url string, userParams map[string]string, token *oauth.AccessToken) (resp *http.Response, err error) {
+	return c.oauthClient.Post(url, userParams, token)
 }
 
 func (c *Client) GetConsumerKey() string {

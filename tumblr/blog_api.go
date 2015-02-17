@@ -2,6 +2,7 @@ package tumblr
 
 import (
 	"encoding/json"
+	"github.com/mrjones/oauth"
 	"io/ioutil"
 	"strconv"
 )
@@ -9,19 +10,21 @@ import (
 type BlogApi struct {
 	Host   string
 	client *Client
+	token  *oauth.AccessToken
 }
 
-func NewBlogApi(host string, client *Client) *BlogApi {
+func NewBlogApi(host string, client *Client, token *oauth.AccessToken) *BlogApi {
 	return &BlogApi{
 		Host:   host,
 		client: client,
+		token:  token,
 	}
 }
 
 func (blog *BlogApi) get(method string, params *map[string]string) ([]byte, error) {
 	uri := "http://api.tumblr.com/v2/blog/" + blog.Host + method
 
-	res, err := blog.client.Get(uri, *params)
+	res, err := blog.client.Get(uri, *params, blog.token)
 	if err != nil {
 		return make([]byte, 0), err
 	}
@@ -33,7 +36,7 @@ func (blog *BlogApi) get(method string, params *map[string]string) ([]byte, erro
 func (blog *BlogApi) post(method string, params *map[string]string) ([]byte, error) {
 	uri := "http://api.tumblr.com/v2/blog/" + blog.Host + method
 
-	res, err := blog.client.Post(uri, *params)
+	res, err := blog.client.Post(uri, *params, blog.token)
 	if err != nil {
 		return make([]byte, 0), err
 	}
