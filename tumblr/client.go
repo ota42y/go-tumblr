@@ -42,3 +42,11 @@ func (c *Client) Post(url string, userParams map[string]string, token *oauth.Acc
 func (c *Client) GetConsumerKey() string {
 	return c.consumerKey
 }
+
+func (c *Client) GetRequestTokenAndUrl(callbackUrl string) (rtoken *oauth.RequestToken, loginUrl string, err error) {
+	return c.oauthClient.GetRequestTokenAndUrl(callbackUrl)
+}
+
+func (c *Client) AuthorizeToken(rtoken *oauth.RequestToken, verificationCode string) (atoken *oauth.AccessToken, err error) {
+	return c.oauthClient.AuthorizeToken(rtoken, verificationCode)
+}
