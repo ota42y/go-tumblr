@@ -58,31 +58,34 @@ func (blog *BlogApi) Info() (m *Meta, b *Blog, err error) {
 	return &root.Meta, &root.Response.Blog, err
 }
 
-func (blog *BlogApi) Posts(postType string) (*Meta, *[]Post, error) {
+func (blog *BlogApi) Posts(postType string, params *map[string]string) (*Meta, *[]Post, error) {
 	// https://www.tumblr.com/docs/en/api/v2#posts
 	// api.tumblr.com/v2/blog/{base-hostname}/posts[/type]?api_key={key}&[optional-params=]
 
-	params := make(map[string]string)
-	params["api_key"] = blog.client.GetConsumerKey()
+	if params == nil {
+		p := make(map[string]string)
+		params = &p
+	}
+	(*params)["api_key"] = blog.client.GetConsumerKey()
 
 	method := "/posts"
 	if postType != "" {
 		method += "/" + postType
 	}
 
-	data, err := blog.get(method, &params)
+	data, err := blog.get(method, params)
 	var root Root
 	json.Unmarshal(data, &root)
 
 	return &root.Meta, &root.Response.Posts, err
 }
 
-func (blog *BlogApi) Photo() (*Meta, *[]Post, error) {
-	return blog.Posts("photo")
+func (blog *BlogApi) Photo(params *map[string]string) (*Meta, *[]Post, error) {
+	return blog.Posts("photo", nil)
 }
 
-func (blog *BlogApi) Quote() (*Meta, *[]Post, error) {
-	return blog.Posts("quote")
+func (blog *BlogApi) Quote(params *map[string]string) (*Meta, *[]Post, error) {
+	return blog.Posts("quote", nil)
 }
 
 func (blog *BlogApi) Reblog(id int64, reblog_key string, comment string) (*Meta, int64, error) {
