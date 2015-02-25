@@ -3,22 +3,15 @@ go-tumblr is a simple, transparent Go package for accessing version 2 of the Tum
 This package is under development.
 
 # install
+go get github.com/mrjones/oauth
+go get github.com/ota42y/go-tumblr/tumblr
 
 # Hou to use
+see [example/example.go](example/example.go)
 
 # Get Access Token
-This package not provide.
-So you need access token.
-
-I recommend use oauth package
-go get github.com/mrjones/oauth
-
-see example/getAccessToken.go
 see [example/getAccessToken.go](example/getAccessToken.go)
 
-
-# example
-see [example/example.go](example/example.go)
 
 # Feature
 - [x] get auth token
