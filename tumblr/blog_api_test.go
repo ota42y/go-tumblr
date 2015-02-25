@@ -42,7 +42,7 @@ func TestInfo(t *testing.T) {
 func TestPosts(t *testing.T) {
 	client := CreateTestTumblr().Client
 	blogApi := CreateTestApi(client)
-	meta, posts, err := blogApi.Posts("")
+	meta, posts, err := blogApi.Posts("", nil)
 
 	if err != nil {
 		t.Errorf("response error%v\n", err)
@@ -64,7 +64,7 @@ func TestPosts(t *testing.T) {
 func TestPhotos(t *testing.T) {
 	client := CreateTestTumblr().Client
 	blogApi := CreateTestApi(client)
-	meta, posts, err := blogApi.Photo()
+	meta, posts, err := blogApi.Photo(nil)
 
 	if err != nil {
 		t.Errorf("response error%v\n", err)
@@ -91,10 +91,66 @@ func TestPhotos(t *testing.T) {
 	}
 }
 
+func TestPhotosWithLimit(t *testing.T) {
+	client := CreateTestTumblr().Client
+	blogApi := CreateTestApi(client)
+
+	meta, posts, err := blogApi.Posts("", nil)
+
+	if err != nil {
+		t.Errorf("response error%v\n", err)
+		t.FailNow()
+	}
+
+	if meta == nil {
+		t.Errorf("meat is nil")
+		t.FailNow()
+	}
+
+	if posts == nil {
+		t.Errorf("response is nil")
+		t.FailNow()
+	}
+
+	if len(*posts) < 2 {
+		t.Errorf("paramater's test need 2 or more post %v", meta)
+		t.FailNow()
+	}
+
+	params := make(map[string]string)
+	params["offset"] = "1"
+	params["limit"] = "1"
+	meta, offsetPosts, err := blogApi.Posts("", &params)
+
+	if err != nil {
+		t.Errorf("response error%v\n", err)
+		t.FailNow()
+	}
+
+	if meta == nil {
+		t.Errorf("meat is nil")
+		t.FailNow()
+	}
+
+	if offsetPosts == nil {
+		t.Errorf("response is nil")
+		t.FailNow()
+	}
+
+	if len(*offsetPosts) != 1 {
+		t.Errorf("no posts %v", meta)
+		t.FailNow()
+	}
+
+	if (*posts)[1].Id != (*offsetPosts)[0].Id {
+		t.Errorf("offset isn't work")
+		t.FailNow()
+	}
+}
 func TestQuote(t *testing.T) {
 	client := CreateTestTumblr().Client
 	blogApi := CreateTestApi(client)
-	meta, posts, err := blogApi.Quote()
+	meta, posts, err := blogApi.Quote(nil)
 
 	if err != nil {
 		t.Errorf("response error%v\n", err)

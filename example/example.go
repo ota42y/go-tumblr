@@ -14,7 +14,11 @@ func main() {
 	t := tumblr.New(consumerKey, consumerSecret, accessToken, accessTokenSecret)
 	blogApi := t.NewBlogApi("ota42y.tumblr.com")
 
-	meta, posts, err := blogApi.Photo()
+	params := make(map[string]string)
+	params["offset"] = "1"
+	params["limit"] = "1"
+
+	meta, posts, err := blogApi.Photo(&params)
 	if err == nil {
 		fmt.Println(meta)
 		post := (*posts)[0]
