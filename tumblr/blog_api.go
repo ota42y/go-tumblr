@@ -81,11 +81,11 @@ func (blog *BlogApi) Posts(postType string, params *map[string]string) (*Meta, *
 }
 
 func (blog *BlogApi) Photo(params *map[string]string) (*Meta, *[]Post, error) {
-	return blog.Posts("photo", nil)
+	return blog.Posts("photo", params)
 }
 
 func (blog *BlogApi) Quote(params *map[string]string) (*Meta, *[]Post, error) {
-	return blog.Posts("quote", nil)
+	return blog.Posts("quote", params)
 }
 
 func (blog *BlogApi) Reblog(id int64, reblog_key string, comment string) (*Meta, int64, error) {
