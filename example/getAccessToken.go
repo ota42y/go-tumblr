@@ -15,7 +15,7 @@ func main() {
 	t := tumblr.New(consumerKey, consumerSecret)
 	client := t.Client
 
-	requestToken, url, err := client.GetRequestTokenAndUrl("http://localhost")
+	requestToken, url, err := client.GetRequestTokenAndURL("http://localhost")
 	if err != nil {
 		panic(err)
 	}
@@ -35,14 +35,14 @@ func main() {
 	fmt.Println(accessToken.Token)
 	fmt.Println(accessToken.Secret)
 
-	blogApi := t.NewBlogApi("ota42y.tumblr.com", accessToken)
+	blogAPI := t.NewblogAPI("ota42y.tumblr.com", accessToken)
 
-	meta, posts, err := blogApi.Photo()
+	meta, posts, err := blogAPI.Photo()
 	if err == nil {
 		fmt.Println(meta)
 		post := (*posts)[0]
 
 		fmt.Println(post.Caption)
-		fmt.Println(post.Photos[0].AltSizes[0].Url)
+		fmt.Println(post.Photos[0].AltSizes[0].URL)
 	}
 }

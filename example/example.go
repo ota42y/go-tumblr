@@ -12,18 +12,18 @@ func main() {
 	accessTokenSecret := ""
 
 	t := tumblr.New(consumerKey, consumerSecret, accessToken, accessTokenSecret)
-	blogApi := t.NewBlogApi("ota42y.tumblr.com")
+	blogAPI := t.NewblogAPI("ota42y.tumblr.com")
 
 	params := make(map[string]string)
 	params["offset"] = "1"
 	params["limit"] = "1"
 
-	meta, posts, err := blogApi.Photo(&params)
+	meta, posts, err := blogAPI.Photo(&params)
 	if err == nil {
 		fmt.Println(meta)
 		post := (*posts)[0]
 
 		fmt.Println(post.Caption)
-		fmt.Println(post.Photos[0].AltSizes[0].Url)
+		fmt.Println(post.Photos[0].AltSizes[0].URL)
 	}
 }

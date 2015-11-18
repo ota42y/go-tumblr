@@ -1,36 +1,41 @@
 package tumblr
 
+// Root is response root
 type Root struct {
 	Meta     Meta
 	Response Response
 }
 
+// Meta is meta data struct
 type Meta struct {
 	Status int
 	Msg    string
 }
 
+// Response is tumblr response struct
 type Response struct {
 	Blog  Blog
 	Posts []Post
 }
 
+// Blog is tumbler blog struct
 type Blog struct {
 	Title       string
 	Posts       int
 	Name        string
-	Url         string
+	URL         string
 	Updated     int64 // TODO: convert time object
 	Description string
 	Ask         bool
-	Ask_anon    bool
+	AskAnon     bool `json:"ask_anon"`
 	Likes       int
 }
 
+// Post is tumblr post struct
 type Post struct {
 	BlogName    string
-	Id          int64
-	PostUrl     string `json:"post_url"`
+	ID          int64
+	PostURL     string `json:"post_url"`
 	Type        string
 	Timestamp   int64
 	Date        string
@@ -39,7 +44,7 @@ type Post struct {
 	Tags        []string
 	Bookmarklet bool
 	Mobile      bool
-	SourceUrl   string
+	SourceURL   string
 	SourceTitle string
 	Liked       bool
 	State       string
@@ -60,20 +65,23 @@ type Post struct {
 	Source string
 }
 
+// Photo is post's photo struct
 type Photo struct {
 	Caption  string    `json:"caption"`
 	AltSizes []AltSize `json:"alt_sizes"`
 }
 
+// AltSize is photo's alt_sizez struct
 type AltSize struct {
 	Width  int
 	Height int
-	Url    string
+	URL    string
 }
 
+// ReblogResponse is reblog api response
 type ReblogResponse struct {
 	Meta     Meta
 	Response struct {
-		Id int64
+		ID int64
 	}
 }
