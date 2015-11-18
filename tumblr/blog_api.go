@@ -7,21 +7,23 @@ import (
 	"strconv"
 )
 
-type BlogApi struct {
+// BlogAPI is tumblr blog's api
+type BlogAPI struct {
 	Host   string
 	client *Client
 	token  *oauth.AccessToken
 }
 
-func NewBlogApi(host string, client *Client, token *oauth.AccessToken) *BlogApi {
-	return &BlogApi{
+// NewblogAPI return blog's api
+func NewblogAPI(host string, client *Client, token *oauth.AccessToken) *BlogAPI {
+	return &BlogAPI{
 		Host:   host,
 		client: client,
 		token:  token,
 	}
 }
 
-func (blog *BlogApi) get(method string, params *map[string]string) ([]byte, error) {
+func (blog *BlogAPI) get(method string, params *map[string]string) ([]byte, error) {
 	uri := "http://api.tumblr.com/v2/blog/" + blog.Host + method
 
 	res, err := blog.client.Get(uri, *params, blog.token)
@@ -33,7 +35,7 @@ func (blog *BlogApi) get(method string, params *map[string]string) ([]byte, erro
 	return data, err
 }
 
-func (blog *BlogApi) post(method string, params *map[string]string) ([]byte, error) {
+func (blog *BlogAPI) post(method string, params *map[string]string) ([]byte, error) {
 	uri := "http://api.tumblr.com/v2/blog/" + blog.Host + method
 
 	res, err := blog.client.Post(uri, *params, blog.token)
@@ -45,7 +47,8 @@ func (blog *BlogApi) post(method string, params *map[string]string) ([]byte, err
 	return data, err
 }
 
-func (blog *BlogApi) Info() (m *Meta, b *Blog, err error) {
+// Info return blog's infomation
+func (blog *BlogAPI) Info() (m *Meta, b *Blog, err error) {
 	params := make(map[string]string)
 	params["api_key"] = blog.client.GetConsumerKey()
 
@@ -58,7 +61,8 @@ func (blog *BlogApi) Info() (m *Meta, b *Blog, err error) {
 	return &root.Meta, &root.Response.Blog, err
 }
 
-func (blog *BlogApi) Posts(postType string, params *map[string]string) (*Meta, *[]Post, error) {
+// Posts return blog's posts (https://www.tumblr.com/docs/en/api/v2#posts)
+func (blog *BlogAPI) Posts(postType string, params *map[string]string) (*Meta, *[]Post, error) {
 	// https://www.tumblr.com/docs/en/api/v2#posts
 	// api.tumblr.com/v2/blog/{base-hostname}/posts[/type]?api_key={key}&[optional-params=]
 
@@ -80,18 +84,21 @@ func (blog *BlogApi) Posts(postType string, params *map[string]string) (*Meta, *
 	return &root.Meta, &root.Response.Posts, err
 }
 
-func (blog *BlogApi) Photo(params *map[string]string) (*Meta, *[]Post, error) {
+// Photo return photo api response
+func (blog *BlogAPI) Photo(params *map[string]string) (*Meta, *[]Post, error) {
 	return blog.Posts("photo", params)
 }
 
-func (blog *BlogApi) Quote(params *map[string]string) (*Meta, *[]Post, error) {
+// Quote is quote specific post
+func (blog *BlogAPI) Quote(params *map[string]string) (*Meta, *[]Post, error) {
 	return blog.Posts("quote", params)
 }
 
-func (blog *BlogApi) Reblog(id int64, reblog_key string, comment string) (*Meta, int64, error) {
+// Reblog is reblog specific post
+func (blog *BlogAPI) Reblog(id int64, reblogKey string, comment string) (*Meta, int64, error) {
 	params := make(map[string]string)
 	params["id"] = strconv.FormatInt(id, 10)
-	params["reblog_key"] = reblog_key
+	params["reblog_key"] = reblogKey
 
 	if comment != "" {
 		params["comment"] = comment
@@ -103,5 +110,5 @@ func (blog *BlogApi) Reblog(id int64, reblog_key string, comment string) (*Meta,
 	var response ReblogResponse
 	json.Unmarshal(data, &response)
 
-	return &response.Meta, response.Response.Id, err
+	return &response.Meta, response.Response.ID, err
 }
