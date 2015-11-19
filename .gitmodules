@@ -1,0 +1,3 @@
+[submodule "vendor/github.com/mrjones/oauth"]
+	path = vendor/github.com/mrjones/oauth
+	url = git@github.com:mrjones/oauth.git
