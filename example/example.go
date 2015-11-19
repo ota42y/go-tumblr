@@ -3,24 +3,24 @@ package main
 import (
 	"fmt"
 
+	"github.com/mrjones/oauth"
 	"github.com/ota42y/go-tumblr/tumblr"
 	"github.com/typester/go-pit"
 )
 
-var tumblrDomain string = "ota42y.tumblr.com"
+var tumblrDomain string = "tumblr.com"
 
 func main() {
 	p, err := pit.Get(tumblrDomain, pit.Requires{
 		"consumer_key":        "",
-		"consumer_secret":    "",
-		"access_token":    "",
+		"consumer_secret":     "",
+		"access_token":        "",
 		"access_token_secret": "",
 	})
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-
 
 	consumerKey := (*p)["consumer_key"]
 	consumerSecret := (*p)["consumer_secret"]
@@ -29,8 +29,11 @@ func main() {
 
 	t := tumblr.New(consumerKey, consumerSecret)
 
-	, accessToken, accessTokenSecret)
-	blogAPI := t.NewblogAPI(tumblrDomain)
+	token := &oauth.AccessToken{
+		Token:  accessToken,
+		Secret: accessTokenSecret,
+	}
+	blogAPI := t.NewblogAPI("ota42y.tumblr.com", token)
 
 	params := make(map[string]string)
 	params["offset"] = "1"
@@ -39,6 +42,8 @@ func main() {
 	meta, posts, err := blogAPI.Photo(&params)
 	if err == nil {
 		fmt.Println(meta)
+		fmt.Println(*posts)
+
 		post := (*posts)[0]
 
 		fmt.Println(post.Caption)
